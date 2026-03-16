@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ClubOS — Sistema de Gestión Deportiva</title>
+<title>HighClub — Sistema de Gestión Deportiva</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;700&family=Geist:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -564,7 +564,131 @@
     .demo-layout { grid-template-columns: 1fr; }
     .mini-dash { grid-template-columns: 1fr; }
     .mini-sidebar { display: none; }
+    .modal-body { padding: 1.5rem; }
+    .form-row-2 { grid-template-columns: 1fr; }
   }
+
+  /* --- MODAL OVERLAY --- */
+  .modal-overlay {
+    position: fixed; inset: 0; z-index: 999;
+    background: rgba(0,0,0,0.75);
+    backdrop-filter: blur(8px);
+    display: flex; align-items: center; justify-content: center;
+    padding: 1rem;
+    opacity: 0; pointer-events: none;
+    transition: opacity .25s ease;
+  }
+  .modal-overlay.open { opacity: 1; pointer-events: all; }
+
+  .modal {
+    background: var(--bg2);
+    border: 1px solid var(--border2);
+    border-radius: 18px;
+    width: 100%; max-width: 560px;
+    max-height: 90vh; overflow-y: auto;
+    box-shadow: 0 0 0 1px rgba(0,255,136,0.08), 0 40px 80px rgba(0,0,0,0.7);
+    transform: translateY(20px) scale(.97);
+    transition: transform .3s ease;
+    position: relative;
+  }
+  .modal-overlay.open .modal { transform: translateY(0) scale(1); }
+
+  .modal-header {
+    display: flex; align-items: flex-start; justify-content: space-between;
+    padding: 1.75rem 1.75rem 0;
+  }
+  .modal-header-left .modal-label {
+    font-size: 10px; font-weight: 700; letter-spacing: .1em;
+    text-transform: uppercase; color: var(--accent); margin-bottom: 6px;
+  }
+  .modal-header-left h3 {
+    font-size: 22px; font-weight: 800; letter-spacing: -0.8px;
+    color: var(--text); line-height: 1.2;
+  }
+  .modal-close {
+    background: var(--bg3); border: 1px solid var(--border2);
+    color: var(--muted); width: 32px; height: 32px;
+    border-radius: 8px; cursor: pointer; font-size: 16px;
+    display: flex; align-items: center; justify-content: center;
+    transition: all .2s; flex-shrink: 0; margin-left: 12px; margin-top: 2px;
+  }
+  .modal-close:hover { background: rgba(255,255,255,0.08); color: var(--text); }
+
+  .modal-body { padding: 1.5rem 1.75rem 1.75rem; }
+
+  /* Contact info strip inside modal */
+  .modal-contact-strip {
+    display: flex; gap: 10px; margin-bottom: 1.25rem; flex-wrap: wrap;
+  }
+  .modal-contact-chip {
+    display: inline-flex; align-items: center; gap: 7px;
+    background: var(--bg3); border: 1px solid var(--border);
+    border-radius: 8px; padding: 7px 12px;
+    font-size: 12px; color: var(--muted); text-decoration: none;
+    transition: border-color .2s, color .2s;
+  }
+  .modal-contact-chip:hover { border-color: var(--border2); color: var(--text); }
+  .modal-contact-chip i { font-size: 13px; }
+  .modal-contact-chip.ig i { color: #e040fb; }
+  .modal-contact-chip.mail i { color: var(--accent); }
+
+  /* Form fields */
+  .form-row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .form-grp { display: flex; flex-direction: column; gap: 5px; margin-bottom: 12px; }
+  .form-grp label {
+    font-size: 10px; font-weight: 700; letter-spacing: .06em;
+    text-transform: uppercase; color: var(--muted);
+  }
+  .form-grp input, .form-grp select, .form-grp textarea {
+    background: var(--bg3); border: 1px solid var(--border2);
+    border-radius: 8px; padding: 10px 13px;
+    color: var(--text); font-family: var(--font); font-size: 13px;
+    outline: none; transition: border-color .2s, box-shadow .2s;
+    width: 100%; resize: none;
+    -webkit-appearance: none; appearance: none;
+  }
+  .form-grp input:focus, .form-grp select:focus, .form-grp textarea:focus {
+    border-color: rgba(0,255,136,.4);
+    box-shadow: 0 0 0 3px rgba(0,255,136,.07);
+  }
+  .form-grp input::placeholder, .form-grp textarea::placeholder { color: var(--faint); }
+  .form-grp select option { background: #1a1a1a; }
+
+  .modal-divider { height: 1px; background: var(--border); margin: 1rem 0; }
+
+  .btn-modal-submit {
+    width: 100%; padding: 13px; border-radius: 9px;
+    background: var(--accent); color: #000;
+    font-family: var(--font); font-size: 14px; font-weight: 800;
+    border: none; cursor: pointer; transition: all .2s;
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+  }
+  .btn-modal-submit:hover { background: var(--accent2); transform: translateY(-1px); }
+  .btn-modal-submit:disabled { opacity: .6; cursor: not-allowed; transform: none; }
+
+  .form-success-msg {
+    display: none; text-align: center; padding: 1.5rem;
+    color: var(--accent); font-size: 14px; font-weight: 600;
+  }
+  .form-success-msg i { font-size: 2rem; display: block; margin-bottom: .5rem; }
+  .form-success-msg p { color: var(--muted); font-size: 12px; margin-top: 6px; font-weight: 400; }
+
+  /* contact info in existing section */
+  .contact-info-bar {
+    display: flex; gap: 12px; flex-wrap: wrap;
+    justify-content: center; margin-top: 1.5rem;
+  }
+  .contact-pill {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--bg2); border: 1px solid var(--border2);
+    border-radius: 10px; padding: 10px 16px;
+    font-size: 13px; font-weight: 500; color: var(--muted);
+    text-decoration: none; transition: all .2s;
+  }
+  .contact-pill:hover { border-color: rgba(0,255,136,.3); color: var(--text); transform: translateY(-1px); }
+  .contact-pill i { font-size: 15px; }
+  .contact-pill.mail i { color: var(--accent); }
+  .contact-pill.ig i { color: #e040fb; }
 </style>
 </head>
 <body>
@@ -573,13 +697,14 @@
 <nav>
   <a href="#" class="nav-logo">
     <div class="logo-mark"></div>
-    <span class="logo-text">Club<span>OS</span></span>
+    <span class="logo-text">High<span>Club</span></span>
   </a>
   <ul class="nav-links">
     <li><a href="#features">Funciones</a></li>
     <li><a href="#demo">Demo</a></li>
     <li><a href="#pricing">Precios</a></li>
     <li><a href="#faq">FAQ</a></li>
+    <li><a href="#contacto">Contacto</a></li>
   </ul>
   <div class="nav-cta">
     <a href="#demo" class="btn-ghost">Ver demo</a>
@@ -604,17 +729,17 @@
   </p>
 
   <div class="hero-actions">
-    <a href="#pricing" class="btn-primary lg"><i class="fas fa-rocket"></i> Comenzar ahora</a>
+    <a href="#pricing" class="btn-primary lg" onclick="openModal('comenzar');return false;"><i class="fas fa-rocket"></i> Comenzar ahora</a>
     <a href="#demo" class="btn-ghost lg"><i class="fas fa-play-circle"></i> Ver demo en vivo</a>
   </div>
 
   <div class="hero-stats">
     <div class="stat-item">
-      <div class="stat-num">48+</div>
+      <div class="stat-num">1+</div>
       <div class="stat-label">Clubes activos</div>
     </div>
     <div class="stat-item">
-      <div class="stat-num">12,300</div>
+      <div class="stat-num">110</div>
       <div class="stat-label">Jugadores gestionados</div>
     </div>
     <div class="stat-item">
@@ -636,7 +761,7 @@
       <div class="dot r"></div>
       <div class="dot y"></div>
       <div class="dot g"></div>
-      <div class="frame-url">app.clubos.ar — dashboard</div>
+      <div class="frame-url">app.highclub.ar — dashboard</div>
     </div>
     <div class="mini-dash">
       <div class="mini-sidebar">
@@ -708,7 +833,7 @@
     <div class="feat-card">
       <div class="feat-icon"><i class="fas fa-money-bill-wave"></i></div>
       <div class="feat-title">Cobro de Cuotas</div>
-      <div class="feat-desc">Filtrá por equipo, mes y año. El sistema calcula automáticamente recargos por mora y descuentos por becas de trabajo.</div>
+      <div class="feat-desc">Filtrá por equipo, mes y año. El sistema calcula automáticamente recargos por demora y descuentos por becas de trabajo.</div>
     </div>
     <div class="feat-card">
       <div class="feat-icon"><i class="fas fa-hand-holding-heart"></i></div>
@@ -1002,27 +1127,12 @@
       <p class="section-sub" style="margin:0 auto">Elegí el plan que se adapte al tamaño de tu club. Sin contratos, sin costos ocultos.</p>
     </div>
     <div class="pricing-grid">
-      <div class="plan-card reveal">
-        <div class="plan-name">Starter</div>
-        <div class="plan-price"><sup>$</sup>0<sub>/mes</sub></div>
-        <p class="plan-desc">Ideal para clubes pequeños que recién arrancan a digitalizar su gestión.</p>
-        <div class="plan-divider"></div>
-        <ul class="plan-features">
-          <li><i class="fas fa-check"></i>Hasta 50 jugadores</li>
-          <li><i class="fas fa-check"></i>2 equipos</li>
-          <li><i class="fas fa-check"></i>Cobro de cuotas</li>
-          <li><i class="fas fa-check"></i>1 usuario admin</li>
-          <li class="off"><i class="fas fa-times"></i>Buffet</li>
-          <li class="off"><i class="fas fa-times"></i>Reportes PDF</li>
-          <li class="off"><i class="fas fa-times"></i>Múltiples roles</li>
-        </ul>
-        <a href="#" class="btn-plan">Empezar gratis</a>
-      </div>
+
 
       <div class="plan-card featured reveal" style="transition-delay:.1s">
         <div class="plan-badge">Más elegido</div>
         <div class="plan-name">Club</div>
-        <div class="plan-price"><sup>$</sup>9.900<sub>/mes</sub></div>
+        <div class="plan-price"><sup>$</sup>49.999<sub>/mes</sub></div>
         <p class="plan-desc">Para clubes en crecimiento que necesitan control total de su institución.</p>
         <div class="plan-divider"></div>
         <ul class="plan-features">
@@ -1034,24 +1144,24 @@
           <li><i class="fas fa-check"></i>Hasta 5 usuarios</li>
           <li><i class="fas fa-check"></i>Soporte prioritario</li>
         </ul>
-        <a href="#" class="btn-plan featured">Comenzar ahora</a>
+        <a href="#" class="btn-plan featured" onclick="openModal('comenzar');return false;">Comenzar ahora</a>
       </div>
 
       <div class="plan-card reveal" style="transition-delay:.2s">
-        <div class="plan-name">Federación</div>
-        <div class="plan-price"><sup>$</sup>24.900<sub>/mes</sub></div>
-        <p class="plan-desc">Para federaciones y asociaciones que gestionan múltiples clubes afiliados.</p>
+        <div class="plan-name">Ahorra</div>
+        <div class="plan-price"><sup>$</sup>570.000<sub>/año</sub></div>
+        <p class="plan-desc">Ahorra dinero al pagar de forma anual</p>
         <div class="plan-divider"></div>
         <ul class="plan-features">
-          <li><i class="fas fa-check"></i>Todo lo del plan Club</li>
-          <li><i class="fas fa-check"></i>Multi-club</li>
-          <li><i class="fas fa-check"></i>Panel federativo central</li>
-          <li><i class="fas fa-check"></i>API de integración</li>
-          <li><i class="fas fa-check"></i>Usuarios ilimitados</li>
-          <li><i class="fas fa-check"></i>SLA garantizado 99.9%</li>
-          <li><i class="fas fa-check"></i>Onboarding personalizado</li>
+          <li><i class="fas fa-check"></i>Jugadores ilimitados</li>
+          <li><i class="fas fa-check"></i>Equipos ilimitados</li>
+          <li><i class="fas fa-check"></i>Cobro de cuotas + becas</li>
+          <li><i class="fas fa-check"></i>Buffet completo</li>
+          <li><i class="fas fa-check"></i>Reportes y PDF</li>
+          <li><i class="fas fa-check"></i>Hasta 5 usuarios</li>
+          <li><i class="fas fa-check"></i>Soporte prioritario</li>
         </ul>
-        <a href="#" class="btn-plan">Contactar ventas</a>
+        <a href="#" class="btn-plan" onclick="openModal('ventas');return false;">Contactar ventas</a>
       </div>
     </div>
   </div>
@@ -1077,10 +1187,6 @@
       <div class="faq-a">Todos los datos se almacenan en Firebase de Google con encriptación en tránsito y en reposo. Respaldos automáticos diarios y acceso con autenticación de dos factores disponible.</div>
     </div>
     <div class="faq-item">
-      <div class="faq-q">¿Puedo cambiar de plan más adelante?</div>
-      <div class="faq-a">Sí, podés subir o bajar de plan en cualquier momento. Los cambios se aplican al siguiente ciclo de facturación sin penalidades.</div>
-    </div>
-    <div class="faq-item">
       <div class="faq-q">¿Funciona desde el celular?</div>
       <div class="faq-a">Sí. El sistema es completamente responsive. Los vendedores del buffet pueden usarlo desde su teléfono sin descargar ninguna aplicación.</div>
     </div>
@@ -1092,12 +1198,36 @@
   <div class="cta-glow"></div>
   <div class="section-label reveal">Empezá hoy</div>
   <h2 class="reveal">Tu club merece<br><em style="font-style:normal;color:var(--accent)">trabajar mejor.</em></h2>
-  <p class="reveal">Setup en menos de 30 minutos. Sin tarjeta de crédito.</p>
+  <p class="reveal">LLeva tu club al siguiente nivel. Sin tarjeta de crédito.</p>
   <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap" class="reveal">
-    <a href="#" class="btn-primary lg"><i class="fas fa-rocket"></i> Crear cuenta gratis</a>
-    <a href="mailto:hola@clubos.ar" class="btn-ghost lg"><i class="fas fa-envelope"></i> Hablar con ventas</a>
+    <a href="#" class="btn-primary lg" onclick="openModal('comenzar');return false;"><i class="fas fa-rocket"></i> Crear cuenta gratis</a>
+    <a href="#" class="btn-ghost lg" onclick="openModal('ventas');return false;"><i class="fas fa-envelope"></i> Hablar con ventas</a>
   </div>
-  <p style="font-size:12px;color:var(--faint);margin-top:1.5rem" class="reveal">¿Tenés preguntas? Escribinos a hola@clubos.ar</p>
+  <p style="font-size:12px;color:var(--faint);margin-top:1.5rem" class="reveal">¿Tenés preguntas? Escribinos a <a href="mailto:flyhighelevateyourstyle@gmail.com" style="color:var(--muted);text-decoration:underline">flyhighelevateyourstyle@gmail.com</a></p>
+</section>
+
+<!-- CONTACTO -->
+<section id="contacto" style="padding:4rem 2rem;max-width:800px;margin:0 auto;text-align:center">
+  <div class="reveal">
+    <div class="section-label">Contacto</div>
+    <h2 class="section-title">Hablemos.</h2>
+    <p class="section-sub" style="margin:0 auto 2rem">Escribinos directamente o mandanos un mensaje y te respondemos a la brevedad.</p>
+    <div class="contact-info-bar">
+      <a href="mailto:flyhighelevateyourstyle@gmail.com" class="contact-pill mail">
+        <i class="fas fa-envelope"></i>
+        flyhighelevateyourstyle@gmail.com
+      </a>
+      <a href="https://www.instagram.com/high_software/" target="_blank" rel="noopener" class="contact-pill ig">
+        <i class="fab fa-instagram"></i>
+        @high_software
+      </a>
+    </div>
+    <div style="margin-top:1.5rem">
+      <button class="btn-primary lg" onclick="openModal('comenzar')" style="margin:0 auto">
+        <i class="fas fa-paper-plane"></i> Enviar mensaje
+      </button>
+    </div>
+  </div>
 </section>
 
 <!-- FOOTER -->
@@ -1105,19 +1235,184 @@
   <div class="footer-inner">
     <div class="footer-left">
       <div class="logo-mark" style="width:22px;height:22px;border-radius:5px"></div>
-      <span style="font-size:13px;font-weight:700;color:var(--text)">ClubOS</span>
+      <span style="font-size:13px;font-weight:700;color:var(--text)">HighClub</span>
       <span class="footer-text">— Todos los derechos reservados 2025</span>
     </div>
     <div class="footer-links">
-      <a href="#">Privacidad</a>
-      <a href="#">Términos</a>
-      <a href="#">Contacto</a>
-      <a href="#">Estado del servicio</a>
+      <a href="mailto:flyhighelevateyourstyle@gmail.com"><i class="fas fa-envelope" style="margin-right:4px"></i>flyhighelevateyourstyle@gmail.com</a>
+      <a href="https://www.instagram.com/high_software/" target="_blank" rel="noopener" style="color:#e040fb"><i class="fab fa-instagram" style="margin-right:4px"></i>@high_software</a>
     </div>
   </div>
 </footer>
 
-<script>
+<!-- MODAL CONTACTO -->
+<div class="modal-overlay" id="contactModal" onclick="handleOverlayClick(event)">
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+
+    <div class="modal-header">
+      <div class="modal-header-left">
+        <div class="modal-label" id="modal-label-text">Empezar ahora</div>
+        <h3 id="modal-title">Contanos sobre<br>tu club</h3>
+      </div>
+      <button class="modal-close" onclick="closeModal()" aria-label="Cerrar">✕</button>
+    </div>
+
+    <div class="modal-body">
+      <!-- Quick contact chips -->
+      <div class="modal-contact-strip">
+        <a href="mailto:flyhighelevateyourstyle@gmail.com" class="modal-contact-chip mail">
+          <i class="fas fa-envelope"></i> flyhighelevateyourstyle@gmail.com
+        </a>
+        <a href="https://www.instagram.com/high_software/" target="_blank" rel="noopener" class="modal-contact-chip ig">
+          <i class="fab fa-instagram"></i> @high_software
+        </a>
+      </div>
+
+      <div class="modal-divider"></div>
+
+      <!-- Form -->
+      <div id="modal-form-wrap">
+        <div class="form-row-2">
+          <div class="form-grp">
+            <label>Nombre *</label>
+            <input type="text" id="f-nombre" placeholder="Tu nombre" required>
+          </div>
+          <div class="form-grp">
+            <label>Club / Institución *</label>
+            <input type="text" id="f-club" placeholder="Club Atlético ..." required>
+          </div>
+        </div>
+        <div class="form-row-2">
+          <div class="form-grp">
+            <label>Email *</label>
+            <input type="email" id="f-email" placeholder="tu@email.com" required>
+          </div>
+          <div class="form-grp">
+            <label>WhatsApp</label>
+            <input type="tel" id="f-whatsapp" placeholder="+54 9 2657 ...">
+          </div>
+        </div>
+        <div class="form-grp">
+          <label>Cantidad de jugadores</label>
+          <select id="f-jugadores">
+            <option value="">Seleccioná una opción...</option>
+            <option>Menos de 50</option>
+            <option>50 – 150</option>
+            <option>150 – 300</option>
+            <option>Más de 300</option>
+          </select>
+        </div>
+        <div class="form-grp">
+          <label>Mensaje (opcional)</label>
+          <textarea id="f-mensaje" rows="3" placeholder="Contanos algo sobre tu club o tu consulta..."></textarea>
+        </div>
+
+        <div class="modal-divider"></div>
+
+        <button class="btn-modal-submit" id="modal-submit-btn" onclick="submitContactForm()">
+          <i class="fas fa-paper-plane"></i> Enviar solicitud
+        </button>
+        <p style="font-size:11px;color:var(--faint);text-align:center;margin-top:10px">
+          Te respondemos por email y/o WhatsApp en menos de 24 hs.
+        </p>
+      </div>
+
+      <!-- Success state -->
+      <div class="form-success-msg" id="modal-success">
+        <i class="fas fa-check-circle"></i>
+        ¡Mensaje enviado con éxito!
+        <p>Te contactamos pronto por email o WhatsApp. ¡Gracias por tu interés en HighClub!</p>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+/* ---- MODAL ---- */
+function openModal(type) {
+  const overlay = document.getElementById('contactModal');
+  const label = document.getElementById('modal-label-text');
+  const title = document.getElementById('modal-title');
+  if (type === 'ventas') {
+    label.textContent = 'Contactar ventas';
+    title.innerHTML = 'Hablemos de tu<br>club';
+  } else {
+    label.textContent = 'Comenzar ahora';
+    title.innerHTML = 'Contanos sobre<br>tu club';
+  }
+  // reset form state
+  document.getElementById('modal-form-wrap').style.display = 'block';
+  document.getElementById('modal-success').style.display = 'none';
+  const btn = document.getElementById('modal-submit-btn');
+  btn.disabled = false;
+  btn.innerHTML = '<i class="fas fa-paper-plane"></i> Enviar solicitud';
+  overlay.classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeModal() {
+  document.getElementById('contactModal').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+function handleOverlayClick(e) {
+  if (e.target === document.getElementById('contactModal')) closeModal();
+}
+
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
+/* ---- FORM SUBMIT ---- */
+function submitContactForm() {
+  const nombre   = document.getElementById('f-nombre').value.trim();
+  const club     = document.getElementById('f-club').value.trim();
+  const email    = document.getElementById('f-email').value.trim();
+  const whatsapp = document.getElementById('f-whatsapp').value.trim();
+  const jugadores= document.getElementById('f-jugadores').value;
+  const mensaje  = document.getElementById('f-mensaje').value.trim();
+
+  if (!nombre || !club || !email) {
+    alert('Por favor completá los campos obligatorios: Nombre, Club y Email.');
+    return;
+  }
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    alert('El email ingresado no es válido.');
+    return;
+  }
+
+  const btn = document.getElementById('modal-submit-btn');
+  btn.disabled = true;
+  btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Enviando...';
+
+  // Build mailto link with all info
+  const subject = encodeURIComponent(`[HighClub] Nueva consulta de ${club} — ${nombre}`);
+  const body = encodeURIComponent(
+`Nueva consulta desde el sitio web de HighClub:
+
+Nombre: ${nombre}
+Club / Institución: ${club}
+Email: ${email}
+WhatsApp: ${whatsapp || 'No especificado'}
+Jugadores: ${jugadores || 'No especificado'}
+
+Mensaje:
+${mensaje || '(Sin mensaje adicional)'}
+
+---
+Enviado desde highclub.ar`
+  );
+
+  // Open email client
+  setTimeout(() => {
+    window.location.href = `mailto:flyhighelevateyourstyle@gmail.com?subject=${subject}&body=${body}`;
+
+    // Show success
+    document.getElementById('modal-form-wrap').style.display = 'none';
+    document.getElementById('modal-success').style.display = 'block';
+  }, 800);
+}
+
+/* ---- TABS ---- */
 function switchTab(name, btn) {
   document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
   document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
@@ -1125,6 +1420,7 @@ function switchTab(name, btn) {
   btn.classList.add('active');
 }
 
+/* ---- FAQ ---- */
 document.querySelectorAll('.faq-q').forEach(q => {
   q.addEventListener('click', () => {
     const item = q.parentElement;
@@ -1134,10 +1430,11 @@ document.querySelectorAll('.faq-q').forEach(q => {
   });
 });
 
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
-}, { threshold: 0.12 });
-document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+/* ---- SCROLL REVEAL ---- */
+const ro = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); ro.unobserve(e.target); } });
+}, { threshold: 0.1 });
+document.querySelectorAll('.reveal').forEach(el => ro.observe(el));
 </script>
 </body>
 </html>
