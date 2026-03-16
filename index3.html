@@ -1205,7 +1205,7 @@
     <a href="#" class="btn-primary lg" onclick="openModal('comenzar');return false;"><i class="fas fa-rocket"></i> Crear cuenta gratis</a>
     <a href="#" class="btn-ghost lg" onclick="openModal('ventas');return false;"><i class="fas fa-envelope"></i> Hablar con ventas</a>
   </div>
-  <p style="font-size:12px;color:var(--faint);margin-top:1.5rem" class="reveal">¿Tenés preguntas? Escribinos a <a href="/cdn-cgi/l/email-protection#89efe5f0e1e0eee1ece5ecffe8fdecf0e6fcfbfafdf0e5ecc9eee4e8e0e5a7eae6e4" style="color:var(--muted);text-decoration:underline"><span class="__cf_email__" data-cfemail="a3c5cfdacbcac4cbc6cfc6d5c2d7c6daccd6d1d0d7dacfc6e3c4cec2cacf8dc0ccce">flyhighelevateyourstyle@gmail.com</span></a></p>
+  <p style="font-size:12px;color:var(--faint);margin-top:1.5rem" class="reveal">¿Tenés preguntas? Escribinos a <a href="mailto:flyhighelevateyourstyle@gmail.com" style="color:var(--muted);text-decoration:underline">flyhighelevateyourstyle@gmail.com</a></p>
 </section>
 
 <!-- CONTACTO -->
@@ -1215,9 +1215,9 @@
     <h2 class="section-title">Hablemos.</h2>
     <p class="section-sub" style="margin:0 auto 2rem">Escribinos directamente o mandanos un mensaje y te respondemos a la brevedad.</p>
     <div class="contact-info-bar">
-      <a href="/cdn-cgi/l/email-protection#53353f2a3b3a343b363f36253227362a3c262120272a3f3613343e323a3f7d303c3e" class="contact-pill mail">
+      <a href="mailto:flyhighelevateyourstyle@gmail.com" class="contact-pill mail">
         <i class="fas fa-envelope"></i>
-        <span class="__cf_email__" data-cfemail="e6808a9f8e8f818e838a83908792839f89939495929f8a83a6818b878f8ac885898b">flyhighelevateyourstyle@gmail.com</span>
+        flyhighelevateyourstyle@gmail.com
       </a>
       <a href="https://www.instagram.com/high_software/" target="_blank" rel="noopener" class="contact-pill ig">
         <i class="fab fa-instagram"></i>
@@ -1241,7 +1241,7 @@
       <span class="footer-text">— Todos los derechos reservados 2025</span>
     </div>
     <div class="footer-links">
-      <a href="/cdn-cgi/l/email-protection#1d7b716475747a757871786b7c69786472686f6e696471785d7a707c7471337e7270"><i class="fas fa-envelope" style="margin-right:4px"></i><span class="__cf_email__" data-cfemail="43252f3a2b2a242b262f26352237263a2c363130373a2f2603242e222a2f6d202c2e">flyhighelevateyourstyle@gmail.com</span></a>
+      <a href="mailto:flyhighelevateyourstyle@gmail.com"><i class="fas fa-envelope" style="margin-right:4px"></i>flyhighelevateyourstyle@gmail.com</a>
       <a href="https://www.instagram.com/high_software/" target="_blank" rel="noopener" style="color:#e040fb"><i class="fab fa-instagram" style="margin-right:4px"></i>@high_software</a>
     </div>
   </div>
@@ -1262,8 +1262,8 @@
     <div class="modal-body">
       <!-- Quick contact chips -->
       <div class="modal-contact-strip">
-        <a href="/cdn-cgi/l/email-protection#0c6a607564656b646960697a6d78697563797e7f787560694c6b616d6560226f6361" class="modal-contact-chip mail">
-          <i class="fas fa-envelope"></i> <span class="__cf_email__" data-cfemail="0b6d677263626c636e676e7d6a7f6e72647e79787f72676e4b6c666a626725686466">flyhighelevateyourstyle@gmail.com</span>
+        <a href="mailto:flyhighelevateyourstyle@gmail.com" class="modal-contact-chip mail">
+          <i class="fas fa-envelope"></i> flyhighelevateyourstyle@gmail.com
         </a>
         <a href="https://www.instagram.com/high_software/" target="_blank" rel="noopener" class="modal-contact-chip ig">
           <i class="fab fa-instagram"></i> @high_software
@@ -1330,7 +1330,7 @@
   </div>
 </div>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 /* ---- MODAL ---- */
 function openModal(type) {
   const overlay = document.getElementById('contactModal');
@@ -1386,28 +1386,33 @@ function submitContactForm() {
   btn.disabled = true;
   btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Enviando...';
 
-  const templateParams = {
-    nombre:    nombre,
-    club:      club,
-    email:     email,
-    whatsapp:  whatsapp  || 'No especificado',
-    jugadores: jugadores || 'No especificado',
-    mensaje:   mensaje   || '(Sin mensaje adicional)'
-  };
+  // Build mailto link with all info
+  const subject = encodeURIComponent(`[HighClub] Nueva consulta de ${club} — ${nombre}`);
+  const body = encodeURIComponent(
+`Nueva consulta desde el sitio web de HighClub:
 
-  emailjs.send('service_y3z8js9', 'template_c6swjue', templateParams)
-    .then(() => {
-      document.getElementById('modal-form-wrap').style.display = 'none';
-      document.getElementById('modal-success').style.display = 'block';
-    })
-    .catch((error) => {
-      console.error('EmailJS error:', error);
-      btn.disabled = false;
-      btn.innerHTML = '<i class="fas fa-paper-plane"></i> Enviar solicitud';
-      alert('Hubo un error al enviar. Por favor intentá de nuevo o escribinos a flyhighelevateyourstyle@gmail.com');
-    });
+Nombre: ${nombre}
+Club / Institución: ${club}
+Email: ${email}
+WhatsApp: ${whatsapp || 'No especificado'}
+Jugadores: ${jugadores || 'No especificado'}
+
+Mensaje:
+${mensaje || '(Sin mensaje adicional)'}
+
+---
+Enviado desde highclub.ar`
+  );
+
+  // Open email client
+  setTimeout(() => {
+    window.location.href = `mailto:flyhighelevateyourstyle@gmail.com?subject=${subject}&body=${body}`;
+
+    // Show success
+    document.getElementById('modal-form-wrap').style.display = 'none';
+    document.getElementById('modal-success').style.display = 'block';
+  }, 800);
 }
-
 
 /* ---- TABS ---- */
 function switchTab(name, btn) {
